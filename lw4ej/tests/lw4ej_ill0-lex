@@ -1,0 +1,25 @@
+// illegal test case related to Identifiers and values.
+
+VAR fibonacci1 = 0;
+VAR fibonacci2 = 47.kk1;      //not recoginized as a number or float.
+VAR PI = 3.1415;              //uppercase identifier not allowed.
+VAR fibonacci;
+VAR i_var;                    //illegal character in identifier.
+VAR iVar;                     //mixture of uppercase and lowercase identifier.
+VAR str = "hello world";      //string not supported.
+
+FOR i=1 STEP 1 TO 20 DO
+BEGIN
+  fibonacci = fibonacci1 + fibonacci2;
+  fibonacci2 = fibonacci1;
+  fibonacci1 = fibonacci;
+  JUMP fibonacci;
+  TURN pi*fibonacci;
+  GO sin(fibonacci * pi);
+  GO cos - fibonacci;
+  JUMP sqrt (fibonacci-fibonacci2) /fibonacci2;
+END
+
+
+  
+  

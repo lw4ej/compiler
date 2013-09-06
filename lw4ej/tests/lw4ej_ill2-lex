@@ -1,0 +1,22 @@
+// illegal test case related to operators.
+
+VAR fibonacci1 = 9&1;                   //Not recognize binary operator
+VAR fibonacci2 = 1;             
+VAR pi = 3.1415, variable=3;             //Comma is not recognized
+VAR fibonacci;
+VAR i;
+
+FOR i=1 STEP 1 TO 20 DO
+{                                       //curly brace is not an operator nor keyword
+  fibonacci = fibonacci1 + fibonacci2;
+  fibonacci2 = fibonacci1;
+  fibonacci1 = fibonacci;
+  JUMP fibonacci;
+  TURN pi*fibonacci;
+  GO sin(fibonacci * pi);
+  GO cos -fibonacci* pi;
+  JUMP sqrt (fibonacci-fibonacci2) % fibonacci2;   //% is not an operator
+}                                       //curly brace is not an operator nor keyword
+
+  
+  

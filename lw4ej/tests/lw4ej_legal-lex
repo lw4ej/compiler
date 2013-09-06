@@ -1,0 +1,23 @@
+// calculate fibonacci, and make some actions
+
+VAR fibonacci1 = 0;
+VAR fibonacci2 = 1;
+VAR pi = 3.1415;
+VAR fibonacci;
+VAR i;
+
+FOR i=1 STEP 1 TO 20 DO
+BEGIN
+  fibonacci = fibonacci1 + fibonacci2;
+  fibonacci2 = fibonacci1;
+  fibonacci1 = fibonacci;
+  JUMP fibonacci;
+  TURN pi*fibonacci;
+  GO sin(fibonacci * pi);
+  GO cos fibonacci * pi); 								 //accept by lex
+  JUMP sqrt(fibonacci - fibonacci2) / fibonacci2;
+END
+
+
+  
+  

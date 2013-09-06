@@ -1,0 +1,23 @@
+// illegal test case related to keywords.
+
+VARIABLE fibonacci1 = 0;          // VARIABLE is not a keyword.
+VA fibonacci2 = 1;                // VA is not a keyword either.
+VAR pi = 3.1415;
+VAR fibonacci;
+VAR i;
+
+FOR i=1 STEP 1 TO 20 DO
+Begin                             //keyword is case sensitive
+  fibonacci = fibonacci1 + fibonacci2;
+  fibonacci2 = fibonacci1;
+  fibonacci1 = fibonacci;
+  JUMP fibonacci;
+  TURN pi*fibonacci;
+  GO SIN(fibonacci * pi);         //keyword is case sensitive
+  GO cos -fibonacci* pi;
+  JUMP sqrt (fibonacci-fibonacci2) /fibonacci2;
+END
+
+
+  
+  
