@@ -1,0 +1,64 @@
+Changes:
+
+1. token.h
+
+/*Conditional and while Tokens.*/
+#define IF 282
+#define ELSE 283
+#define THEN 284
+#define WHILE 285
+#define EQ 286      //Equal to
+#define NEQ 287     //Not equal to
+#define GT 288      //Greater than
+#define GTE 289     //Greater than or equal to
+#define LT 290      //Less than
+#define LTE 291     //Less than or equal to
+#define NOT 292
+#define TRUE 293
+#define FALSE 294
+#define CONTINUE 295
+#define BREAK 296
+
+/*Procedure with parameters*/
+#define PROCEDURE 297
+#define COMMA 298
+#define RETURN 299
+
+/*Operational keywords*/
+#define UP 300
+#define DOWN 301
+#define NORTH 302
+#define EAST 303
+#define WEST 304
+#define SOUTH 305
+
+2. turtle_lw4ej.l
+
+IF              return IF;
+ELSE            return ELSE;
+THEN            return THEN;
+WHILE           return WHILE;
+TRUE            return TRUE;
+FALSE           return FALSE;
+CONTINUE        return CONTINUE;
+BREAK           return BREAK;
+PROCEDURE       return PROCEDURE;
+RETURN          return RETURN;
+
+!               return NOT;
+\>              return GT;
+\<              return LT;
+\>=             return GTE;
+\<=             return LTE;
+==              return EQ;
+!=              return NEQ;
+,               return COMMA;
+\{              return COPEN;
+\}              return CCLOSE;
+
+NORTH           return NORTH;
+SOUTH           return SOUTH;
+EAST            return EAST;
+WEST            return WEST;
+UP              return UP;
+DOWN            return DOWN;
