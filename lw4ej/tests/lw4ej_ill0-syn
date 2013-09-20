@@ -1,0 +1,20 @@
+// illegal test with declaration and statement
+
+VAR fibonaccia = 0;     //assignment is not allowed at declaration.
+fibonaccia = aaa = 12   //assignment not allowed.
+fibonaccia;             //illegal statement.
+20;                     //illegal statement.
+GO;                     //illegal statement.
+GO fibonaccia           //missing semicolon in statement.
+fibonaccia + 50;        //illegal statement.
+fibonaccia == 30;       //illegal statement.
+sin(30);                //not a statement;
+
+fibonaccia = (GO 35);   //assignment should not followed another statement
+fibonaccia = (3 + 4;    //missing right branket
+
+FOR i=3 STEP 9 TO 100   //missing DO 
+    TURN 34;
+    JUMP 33;
+
+

@@ -1,0 +1,16 @@
+// illegal test with expression, term, factor, atomic
+
+VAR fibonacci;
+VAR gold;
+fibonacci = 0;
+gold = 100;
+fibonacci = 4-;             //illegal expression 
+fibonacci = fibonacci--;    //illegal expression
+fibonacci = 3 -+- 5;        //illegal expression
+fibonacci = (8+9));         //unbalanced atomic
+fibonacci = --gold;         //illegal expression.
+
+fibonacci = -sin(gold);     //sin not a atomic
+fibonacci = sin(=);         // = is not a factor
+fibonacci = (aaa = 111);    //(aaa = 111) is not an expression.
+fibonacci = 8**8;           //illegal term

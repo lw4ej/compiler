@@ -1,0 +1,15 @@
+// illegal test with arbitrary combination
+
+VAR aaa;
+VAR aaa, bbb;       
+aaa = 12 bbb;
+GO *;
+aaa+-;
+**
++-/
+
+FOR STEP TO JUMP
+    JUMP (123;
+    sin(***);
+    TURN 999*(TURN 88);
+
