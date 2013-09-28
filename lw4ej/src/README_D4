@@ -1,0 +1,5 @@
+1. add rules about conditionals, while-loop, and procedure with parameters
+2. simply deal with syntax error by discarding it and continue from 
+           next legal ones : for stmt
+		   or one after semicolon : for declaration
+3. supressing predictive shift/reduce conflict of error discarding. 
