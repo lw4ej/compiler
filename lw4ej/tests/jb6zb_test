@@ -1,0 +1,62 @@
+VAR a;
+
+a = 4;
+
+// b = 9
+
+c = 90; //undefined variable , it works under turtle and ps2pdf
+
+GO c;
+
+c = c / 0; //divide zero, runtime error.
+
+IF(b == a ) //undefined variable b, runtime error. 
+{
+	GO 240;
+	TURN 180 - 2 * b;
+	GO a * 60;
+	TURN b + 90;
+	GO a * 60;
+	TURN b + 90;
+	
+} 
+ELSE
+{
+	WHILE(a != b){
+		IF( a < b ) {
+			a = a + 1; 
+		}
+		ELSE{
+			b = b + 1; 
+		}
+    }
+}
+
+IF(a == 4)
+{
+	GO 40;
+	TURN 90;
+	GO 40;
+	TURN 90;
+	GO 40;
+	TURN 90;
+	GO 40;
+	TURN 90;
+}	 
+ELSE
+{
+	GO 30;
+	TURN 120;
+	GO 30;
+	TURN 120;
+	GO 30;
+	TURN 120;
+}
+
+
+//IF( a < b ) 
+//	a = a + 1; //single statement, syntax error
+//ELSE
+//	b = b + 1; //single statement, syntax error
+		
+ELIF //should be unrecognized lexem, but treat it as syntax error.
