@@ -1,11 +1,14 @@
 
 all: turtle result
 
-result: eins.tlt if_test-syn while_test-syn proc_test-syn turtle
-	./turtle < eins.tlt > eins.ps
-	./turtle < if_test-syn > if_test-syn.ps
-	./turtle < while_test-syn > while_test-syn.ps
-	./turtle < proc_test-syn > proc_test-syn.ps
+result: test-semantic-ill test-syntax-ill turtle
+	./turtle <test-semantic-ill> test-semantic-ill.ps
+	./turtle <test-syntax-ill> test-syntax-ill.ps
+#eins.tlt if_test-syn while_test-syn proc_test-syn turtle
+#	./turtle < eins.tlt > eins.ps
+#	./turtle < if_test-syn > if_test-syn.ps
+#	./turtle < while_test-syn > while_test-syn.ps
+#	./turtle < proc_test-ill > proc_test-ill.ps
 
 lex.yy.o:  lex.yy.c turtle-lw4ej.tab.h symtab.h
 	gcc -c lex.yy.c
@@ -26,5 +29,5 @@ turtle: turtle-lw4ej.tab.o lex.yy.o symtab.c
 	gcc lex.yy.o turtle-lw4ej.tab.o symtab.c -lfl -o turtle
 
 clean:
-	rm -f turtle lex.* turtle-lw4ej.tab.* *.o *.output
+	rm -f turtle lex.* turtle-lw4ej.tab.* *.o *.output *.ps
 

@@ -1,4 +1,3 @@
-
 JUMP 80;
 
 //declaring drawing a 4 sided shape with varying angles (with four parameters)

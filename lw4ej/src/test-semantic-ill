@@ -1,0 +1,23 @@
+VAR poly; 
+
+JUMP 80;
+//declaring drawing a 4 sided shape with varying angles (with four parameters)
+
+a = 60; //undefined variable
+
+PROCEDURE poly { //multiple defined identifiers
+GO 40;
+TURN PARAM;
+GO 40;
+TURN PARAM;
+GO 40;
+TURN PARAM;
+GO 40;
+TURN PARAM;
+}
+
+CALL poly 80 100 80 100;
+CALL poly 89 100;  //  missing paramter
+CALL helloworld;   // undefined function
+
+TURN PARAM; //no parameters for globle

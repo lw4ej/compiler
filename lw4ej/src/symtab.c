@@ -23,6 +23,7 @@ static node *newnode(char *s)
   assert(n!=NULL);
   n->next=NULL;
   n->symbol = (char *)malloc(strlen(s)+1);
+  n->defined = 0;
   assert(n->symbol!=NULL);
   strcpy(n->symbol,s);
   n->level=level;

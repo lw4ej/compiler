@@ -1,3 +1,15 @@
+D6:
+1.syntax error : illegal declare and statment
+2.semantic error:
+   2-1:undefined ID
+   2-2:multiple defined ID
+   2-3:not equal numbers of form and real parameters for function
+3.test suit
+   3-1:test-syntax-ill
+   3-2:test-semantic-ill
+==========================================================
+
+D4:
 1. add rules about conditionals, while-loop, and procedure with parameters
 2. simply deal with syntax error by discarding it and continuing from 
            next legal ones : for stmt

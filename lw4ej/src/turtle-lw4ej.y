@@ -2,6 +2,9 @@
 %{
 #include <stdio.h>
 #include "symtab.h"
+static int params = 0;
+static int n=0;
+static infunc = 0;
 %}
 
 %union { int i; node *n; double d;}
@@ -22,7 +25,7 @@
 %nonassoc ELSE
 
 %expect 1 
-
+ 
 //shift/reduce warning for general syntax error discarding in stmt
 
 %%
@@ -38,7 +41,11 @@ tail: { printf("closepath\nstroke\n"); };
 
 decllist: ;
 decllist: decllist decl;
-decl: VAR ID SEMICOLON { printf("/tlt%s 0 def\n",$2->symbol);}
+decl: VAR ID SEMICOLON { 
+	printf("/tlt%s 0 def\n",$2->symbol);
+    if($2->defined == 1)
+		fprintf(stderr,"multiple define: %s\n", $2->symbol);
+    $2->defined = 1;}
      | error SEMICOLON { yyerror("unrecognized declaration"); };
 
 stmtlist: ;
@@ -46,21 +53,44 @@ stmtlist: stmtlist stmt ;
 stmt: error {yyerror("unrecognized statement");};
 
 //procedure 
-stmt: PROCEDURE ID { printf("/proc%s { \n", $2->symbol); }  
-	  stmt{ printf("} def\n"); };
-stmt: CALL ID realparams SEMICOLON{printf(" proc%s\n", $2->symbol);};
+stmt: PROCEDURE ID { 
+	printf("/proc%s { \n", $2->symbol); 
+    if( $2->defined ==1 )
+		fprintf(stderr, "multiple define: %s\n",$2->symbol);
+    $2->defined =1;
+	$2->params = params;
+	infunc++;}  
+	  stmt{ printf("} def\n"); 
+	  		$2->params = params - $2->params;
+	  		params = params - $2->params;
+			infunc--;
+	  	  };
+stmt: CALL ID {n =0;}realparams{if(n!=$2->params) fprintf(stderr,"missing parameters for fun %s\n",$2->symbol); n=0;} 
+      SEMICOLON{
+	          if($2->defined == 1)
+		 		printf(" proc%s\n", $2->symbol);
+			  else fprintf(stderr,"undefined function: %s\n", $2->symbol);
+			  };
 realparams: ;
-realparams: realparams atomic;
+realparams: realparams atomic{n++;};
 //end-proc
 
-stmt: ID ASSIGN expr SEMICOLON {printf("/tlt%s exch store\n",$1->symbol);} ;
+stmt: ID ASSIGN expr SEMICOLON {
+	              if($1->defined == 1)
+	                printf("/tlt%s exch store\n",$1->symbol);
+				  else fprintf(stderr,"undefined left value: %s\n",$1->symbol);
+				};
 stmt: GO expr SEMICOLON {printf("0 rlineto\n");};
 stmt: JUMP expr SEMICOLON {printf("0 rmoveto\n");};
 stmt: TURN expr SEMICOLON {printf("rotate\n");};
 stmt: FOR ID ASSIGN expr 
           STEP expr
 	  TO expr
-	  DO {printf("{ /tlt%s exch store\n",$2->symbol);} 
+	  DO {
+		  if($2->defined == 1)
+			  printf("{ /tlt%s exch store\n",$2->symbol);
+		  else fprintf(stderr,"undefined left value : %s \n",$2->symbol);
+		 } 
 	     stmt {printf("} for\n");};
 
 //if-else
@@ -103,15 +133,22 @@ factor: atomic;
 atomic: OPEN expr CLOSE;
 atomic: NUMBER {printf("%d ",$1);};
 atomic: FLOAT {printf("%f ",$1);};
-atomic: ID {printf("tlt%s ", $1->symbol);};
-atomic: PARAM;
+atomic: ID {if($1->defined ==1)
+               printf("tlt%s ", $1->symbol);
+			 else fprintf(stderr,"undefined variable: %s\n",$1->symbol);
+		   };
+atomic: PARAM{if(infunc>0)
+                 params++; 
+			  else
+				 fprintf(stderr, "NO PARAM available for globle\n");
+			 };
 
 %%
 int yyerror(char *msg)
-{  fprintf(stderr,"Error: %s\n", msg);
+{  
+	fprintf(stderr,"Error: %s\n", msg);
    return 0;
 }
-
 int main(void)
 {   yyparse();
     return 0;

@@ -10,7 +10,7 @@ typedef struct node {
   /* may be other stuff */
   int defined;
   int address;
-  int num_p;
+  int params;
 }  node;
 
 extern node *insert(char *s);
