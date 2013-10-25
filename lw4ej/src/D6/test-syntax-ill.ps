@@ -1,0 +1,26 @@
+%!PS Adobe
+
+newpath 0 0 moveto
+/tltalpha 0 def
+/tltc 0 def
+/tltn 0 def
+/tlti 0 def
+90 rotate
+100 0 rmoveto
+90 neg rotate
+77.770000 /tltalpha exch store
+200 /tltc exch store
+50 /tltn exch store
+1 1 tltn { /tlti exch store
+tltalpha rotate
+200 tlti mul tltn div /tltc exch store
+tltc 0 rlineto
+tltalpha neg 90 sub rotate
+tltalpha sin tltc mul 0 rlineto
+90 neg rotate
+tltalpha cos tltc mul 0 rlineto
+180 rotate
+2 360 mul tltn div rotate
+} for
+closepath
+stroke

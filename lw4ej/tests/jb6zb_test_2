@@ -1,0 +1,19 @@
+VAR a;
+VAR b;
+
+a = 10;
+b = 50; 
+
+IF( a < b ) //single statement is not accepted, missing {}
+	b = b + a/10 * 10;
+
+TURN 90;
+
+WHILE( b >=  10){
+	GO 30;
+	TURN 145;
+	JUMP 10;
+	TURN 90;
+	GO b;
+	b = b - 10;
+}

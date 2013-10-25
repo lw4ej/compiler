@@ -65,7 +65,12 @@ stmt: PROCEDURE ID {
 	  		params = params - $2->params;
 			infunc--;
 	  	  };
-stmt: CALL ID {n =0;}realparams{if(n!=$2->params) fprintf(stderr,"missing parameters for fun %s\n",$2->symbol); n=0;} 
+stmt: CALL ID {n =0;}realparams{
+	             if(n < $2->params) 
+					 fprintf(stderr,"missing parameters for fun %s\n",$2->symbol); 
+	             if(n > $2->params) 
+					 fprintf(stderr,"too many parameters for fun %s\n",$2->symbol); 
+				 n=0;} 
       SEMICOLON{
 	          if($2->defined == 1)
 		 		printf(" proc%s\n", $2->symbol);

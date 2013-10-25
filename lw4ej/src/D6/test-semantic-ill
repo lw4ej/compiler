@@ -18,6 +18,7 @@ TURN PARAM;
 
 CALL poly 80 100 80 100;
 CALL poly 89 100;  //  missing paramter
+CALL poly 1 2 3 4 5;
 CALL helloworld;   // undefined function
 
 TURN PARAM; //no parameter for globle
