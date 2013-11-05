@@ -1,0 +1,25 @@
+Program 3
+FnDecl 3
+VarDecl 1
+StmtBlock 1
+ClassDecl 3
+FnDecl 3
+StmtBlock 0
+
+*** Error line 1.
+void Mystery(Unknown a) {}
+             ^^^^^^^
+*** No declaration found for type 'Unknown'
+
+
+*** Error line 3.
+class Trouble extends Missing implements Gone
+                      ^^^^^^^
+*** No declaration found for class 'Missing'
+
+
+*** Error line 3.
+class Trouble extends Missing implements Gone
+                                         ^^^^
+*** No declaration found for class 'Gone'
+
