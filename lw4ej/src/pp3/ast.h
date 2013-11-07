@@ -33,6 +33,7 @@
 #include "location.h"
 #include <iostream>
 #include "list.h"
+#include <string.h>
 class SymbolTable;
 
 class Node 
