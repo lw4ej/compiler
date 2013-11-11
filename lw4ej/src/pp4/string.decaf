@@ -1,0 +1,15 @@
+class astring{
+
+string a;
+string b;
+
+string f(){
+a=ReadInteger();
+a=ReadLine();
+b="fsafsdds";
+Print(a);
+if(a==b)
+	return a;
+}
+
+}

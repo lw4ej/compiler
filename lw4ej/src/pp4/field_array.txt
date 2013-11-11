@@ -1,0 +1,30 @@
+
+*** Error line 14.
+ 	this.c = a;
+             ^
+*** Aiclass has no such field 'c'
+
+
+*** Error line 29.
+	bii = ta.f(4,5);
+            ^
+*** Incompatible operands: double = int
+
+
+*** Error line 31.
+	this.aii = ta.c;
+                      ^
+*** Aiclass has no such field 'c'
+
+
+*** Error line 50.
+	testarray[3.5] = elem;
+                  ^^^
+*** Array subscript must be an integer
+
+
+*** Error line 55.
+	arr2 = NewArray(10,int);
+             ^
+*** Incompatible operands: int[][] = int[]
+

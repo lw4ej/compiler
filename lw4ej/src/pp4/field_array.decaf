@@ -1,0 +1,59 @@
+
+class Aiclass {
+ int  a;
+ int  b;
+
+ int f(int a, int b){
+ 	Aiclass ai;
+	ai.a=a;
+	ai.b=b;
+	return 0;
+ }
+
+ void cs(){
+ 	this.c = a;
+	a = this.b;
+ }
+
+}
+
+class Biclass extends Aiclass {
+
+int aii;
+double bii;
+
+  Aiclass g(){
+ 	Biclass tb;
+ 	Aiclass ta;
+	aii = ta.f(0,10);
+	bii = ta.f(4,5);
+	ta.a = aii;
+	this.aii = ta.c;
+	ta.b = this.aii;
+	f(ta.a,tb.b);
+	return tb;
+  }
+
+}
+
+Aiclass[] testarray;
+Aiclass elem;
+
+Aiclass[][] test2;
+
+int[][] arr2;
+
+void main(){
+
+	testarray = NewArray(3,Aiclass);
+	testarray[0]= elem;
+	testarray[3.5] = elem;
+
+	test2 = NewArray(4,Aiclass[]);
+	test2[0]=testarray;
+	
+	arr2 = NewArray(10,int);
+	arr2 = NewArray(10, int[]);
+
+}
+

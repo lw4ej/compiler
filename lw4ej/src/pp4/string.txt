@@ -1,0 +1,6 @@
+
+*** Error line 7.
+a=ReadInteger();
+ ^
+*** Incompatible operands: string = int
+
