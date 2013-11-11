@@ -45,6 +45,8 @@ int[][] arr2;
 
 void main(){
 
+	int ar;
+
 	testarray = NewArray(3,Aiclass);
 	testarray[0]= elem;
 	testarray[3.5] = elem;
@@ -54,6 +56,13 @@ void main(){
 	
 	arr2 = NewArray(10,int);
 	arr2 = NewArray(10, int[]);
+	
+	arr2[0][0]=3;
 
+	arr2[0][1]=this.b;
+
+	arr2[1][1]=elem.a;
+
+	arr2[0][2]=elem.f(9,12);
 }
 
