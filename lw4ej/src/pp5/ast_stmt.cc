@@ -131,11 +131,11 @@ void WhileStmt::Emit(){
 	codegen->GenLabel(tplabel1);
 	test->Emit();
 	tplabel2=codegen->NewLabel();
+	endLabel=tplabel2; 
 	codegen->GenIfZ( test->GetAddr(), tplabel2);
 	body->Emit();
 	codegen->GenGoto(tplabel1);
 	codegen->GenLabel(tplabel2);
-	endLabel=tplabel2; 
 }
 
 ForStmt::ForStmt(Expr *i, Expr *t, Expr *s, Stmt *b): LoopStmt(t, b) { 
@@ -163,7 +163,8 @@ void ForStmt::Emit(){
 	char * tplabel2;
 	tplabel1 = codegen->NewLabel();
 	tplabel2 = codegen->NewLabel();
-
+	endLabel = tplabel2;
+	
 	init->Emit();
 	codegen->GenLabel(tplabel1);
 	test->Emit();
@@ -172,7 +173,6 @@ void ForStmt::Emit(){
 	step->Emit();
 	codegen->GenGoto(tplabel1);
 	codegen->GenLabel(tplabel2);
-	endLabel = tplabel2;
 }
 
 IfStmt::IfStmt(Expr *t, Stmt *tb, Stmt *eb): ConditionalStmt(t, tb) { 
@@ -241,6 +241,7 @@ void BreakStmt::Emit(){
 		if(loop!= NULL) break;
 		p = p->GetParent();
 	}
+	Assert(loop->endLabel);
 	codegen->GenGoto(loop->endLabel);
 }
 

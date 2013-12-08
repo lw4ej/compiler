@@ -45,30 +45,32 @@ int ClassDecl::DeployMems(){
 	
 	if(extends != NULL){
 		ClassDecl *ext = dynamic_cast<ClassDecl*>(parent->Lookup(extends->getid(),false));
-		List<const char*> * labels = ext->getMethodLabels(); 
-		varEnum = ext->getsize()-1;
-		fnEnum = labels->NumElements();
+		List<const char*> * plabels = ext->getMethodLabels(); 
+		varEnum = (ext->getsize())-4;
+		fnEnum = plabels->NumElements();
 		for(int i=0; i< fnEnum;i++)
-			methodLabels->Append(labels->Nth(i));
+			methodLabels->Append(plabels->Nth(i));
 	}
 	
 	for(int i = 0; i< members->NumElements(); i++){
+		FnDecl * fn = NULL;
 		if(dynamic_cast<VarDecl*>(members->Nth(i))){
-			members->Nth(i)->SetOffset(varEnum+1);
-			varEnum++;
+			members->Nth(i)->SetOffset(varEnum+4);
+			varEnum+=4;
 		}
-		else if(dynamic_cast<FnDecl*>(members->Nth(i))){
-			members->Nth(i)->SetOffset(fnEnum);
+		else if((fn=dynamic_cast<FnDecl*>(members->Nth(i)))!=NULL){
+			members->Nth(i)->SetOffset(fnEnum*4);
+			methodLabels->Append(fn->GetLabel());
 			fnEnum++;
 		}
 	}
-	return varEnum + 1;
+	return varEnum+4;
 }
 
 void ClassDecl::Emit(){
 	Assert(nodeTable);
 	//set offsets for members;
-	size = DeployMems();
+	//size = DeployMems();
 
 	FnDecl * fn = NULL; 
 
@@ -78,7 +80,6 @@ void ClassDecl::Emit(){
 	for(int i = 0; i< members->NumElements(); i++)
 		if((fn = dynamic_cast<FnDecl*>(members->Nth(i)))!=NULL){
 			fn->Emit();
-			methodLabels->Append(fn->GetLabel());
 	}
 	codegen->GenVTable(getkey(),methodLabels);
 }
@@ -86,7 +87,6 @@ void ClassDecl::Emit(){
 SymbolTable* ClassDecl::ConsTable(){
 
 	if(nodeTable!=NULL) return nodeTable;
-
 	nodeTable = new SymbolTable();
 
 	if(extends){
@@ -117,6 +117,7 @@ SymbolTable* ClassDecl::ConsTable(){
 	for(int i = 0; i< members->NumElements(); i++){
 		nodeTable->Insert(members->Nth(i));
 	}
+
 	//printf("display table\n");
 	//nodeTable->DisplayTable();
 	return nodeTable;
@@ -127,6 +128,8 @@ void ClassDecl::Check() {
 	for(int i = 0; i< members->NumElements(); i++)
 		members->Nth(i)->Check();
 	CheckImp();
+	//set offsets for members;
+	size = DeployMems();
 }
 
 void ClassDecl::CheckImp()
@@ -176,19 +179,6 @@ FnDecl::FnDecl(Identifier *n, Type *r, List<VarDecl*> *d) : Decl(n) {
     (returnType=r)->SetParent(this);
     (formals=d)->SetParentAll(this);
     body = NULL;
-
-	char temp_name[50]="";
-
-	if(strcmp(getkey(), "main")!=0)
-		strcpy(temp_name, "_");
-	ClassDecl* p = NULL;
-	if((p=dynamic_cast<ClassDecl*>(parent))!=NULL)
-	{
-		strcat(temp_name,p->getkey());
-		strcat(temp_name,".");
-	}
-	strcat(temp_name,getkey());
-	SetLabel(temp_name);
 }
 
 SymbolTable* FnDecl::ConsTable(){
@@ -202,6 +192,20 @@ SymbolTable* FnDecl::ConsTable(){
 		Assert((dynamic_cast<StmtBlock*>(body))!=NULL);
 		body->ConsTable();
 	}
+
+	char temp_name[50]="";
+
+	if(strcmp(getkey(), "main")!=0)
+		strcpy(temp_name, "_");
+	ClassDecl* p = NULL;
+	if((p=dynamic_cast<ClassDecl*>(parent))!=NULL)
+	{
+		strcat(temp_name,p->getkey());
+		strcat(temp_name,".");
+	}
+	strcat(temp_name,getkey());
+	SetLabel(temp_name);
+	
 	return nodeTable;
 }
 
@@ -251,9 +255,14 @@ void FnDecl::Emit(){
 	codegen->GenLabel(Label);
 	beginfn = codegen->GenBeginFunc();
 	codegen->ResetLocalsAndTemps();
+	
+	int addthis = 0;
+	if(dynamic_cast<ClassDecl*>(parent)!=NULL)
+		addthis = 4;
+
 	for(int i=formals->NumElements(); i>0; i--){
 		VarDecl * arg = formals->Nth(i-1);
-		arg->SetAddr(new Location(fpRelative, i*4, arg->getkey()));
+		arg->SetAddr(new Location(fpRelative, i*4+addthis, arg->getkey()));
 	}
 	//	formals->Nth(i)->SetAddr(codegen->GenLocalVar(formals->Nth(i)->getkey()));
 	body->Emit();

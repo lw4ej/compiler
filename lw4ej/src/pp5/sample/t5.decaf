@@ -21,7 +21,7 @@ void main()
       Print("\nWho is your favorite CS143 staff member? ");
       if (Wild(names, ReadLine())) {
 	   Print("You just earned 1000 bonus points!\n");
-         break;
+       break;
       }
       Print("That's not a good way to make points. Try again!\n");
    }

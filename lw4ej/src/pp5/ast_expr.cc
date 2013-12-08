@@ -714,7 +714,7 @@ void Call::Emit_Actuals(){
 }
 
 void Call::Push_Actuals(){
-	for(int i = actuals->NumElements()-1;i>=0;i--)
+	for(int i = actuals->NumElements()-1; i>=0; i--)
 			codegen->GenPushParam(actuals->Nth(i)->GetAddr());
 }
 
@@ -764,21 +764,27 @@ void Call::Emit(){
 			base->Emit();
 			MemAddr = codegen->GenLoad(base->GetAddr(),-4); 
 		}
+		
 		else{
 		//object function
+			NamedType* nb = dynamic_cast<NamedType*>(b);
+			Decl *ty = Lookup(nb->getid(),false);
+			ClassDecl *tyclass = dynamic_cast<ClassDecl*>(ty);
+			fn = dynamic_cast<FnDecl*> (tyclass->Lookup(field,true));
 			bool isreturnType = (fn->GetRtype() == Type::voidType)?false:true;
 			Emit_Actuals();
 			base->Emit();
-
+			Assert(base->GetAddr()!=NULL);
 			Location * tmp0 = codegen->GenLoad(base->GetAddr(),0); //load vtable
 			Location * tmp1 = codegen->GenLoad(tmp0, fn->GetOffset());
-		 	Push_Actuals();	
+			Push_Actuals();	
 			codegen->GenPushParam(base->GetAddr());
 			if(isreturnType)
 				MemAddr = codegen->GenACall(tmp1, isreturnType);
 			else
 				codegen->GenACall(tmp1, isreturnType);
-			codegen->GenPopParams(actuals->NumElements()*4 + 4);
+			codegen->GenPopParams((actuals->NumElements())*4 + 4);
+			
 		}
 	}
 }
