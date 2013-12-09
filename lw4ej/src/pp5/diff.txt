@@ -1,2 +1,0 @@
-diff_log 
-diff_log sample/
